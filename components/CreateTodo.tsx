@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { ConvexError } from "convex/values";
+import { toast } from "sonner";
 
 type TodoFormData = z.infer<typeof createTodoSchema>;
 
@@ -55,9 +56,11 @@ export default function CreateTodo() {
 	const handleTodoCreation = async (data: TodoFormData) => {
 		try {
 			await createTodo({ title: data.title, completed: false });
+			toast.success('created')
 			form.reset();
 		} catch (error) {
 			handleTodoCreationError(error);
+			toast.error('failed to created')
 		}
 	};
 
